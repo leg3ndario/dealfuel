@@ -27,11 +27,11 @@ const INITIAL: FormData = {
 }
 
 const dealTypes = [
-  { id: 'emd', icon: '🏠', label: 'Earnest Money Deposit', sub: 'EMD to secure a property under contract' },
-  { id: 'double-same', icon: '🔑', label: 'Double Close (Same Title)', sub: 'A-B and B-C at the same title company' },
-  { id: 'double-diff', icon: '🔑', label: 'Double Close (Different Title)', sub: 'A-B and B-C at different title companies' },
-  { id: 'stack', icon: '📐', label: 'Stack Method', sub: 'Layered financing — seller carryback, DSCR, etc.' },
-  { id: 'other', icon: '💬', label: 'Other / Not Sure', sub: 'Describe your deal in the notes' },
+  { id: 'emd', icon: '💵', label: 'Earnest Money Deposit', sub: 'EMD to secure a property under contract' },
+  { id: 'double-same', icon: '⚡', label: 'Double Close (Same Title)', sub: 'A-B and B-C at the same title company' },
+  { id: 'double-diff', icon: '🏛️', label: 'Double Close (Different Title)', sub: 'A-B and B-C at different title companies' },
+  { id: 'stack', icon: '📊', label: 'Stack Method', sub: 'Layered financing — seller carryback, DSCR, etc.' },
+  { id: 'other', icon: '💡', label: 'Other / Not Sure', sub: 'Describe your deal in the notes' },
 ]
 
 export default function FundingForm() {

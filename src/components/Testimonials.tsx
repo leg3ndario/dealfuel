@@ -2,13 +2,13 @@ const testimonials = [
   {
     name: 'Marcus T.',
     role: 'Real Estate Wholesaler — Atlanta, GA',
-    quote: "Dealfuel saved a $90,000 double close that I almost had to walk away from. They approved it same day and the funds were at the title company the next morning. Exactly what I needed.",
+    quote: "iFundYourDeals saved a $90,000 double close that I almost had to walk away from. They approved it same day and the funds were at the title company the next morning. Exactly what I needed.",
     rating: 5,
   },
   {
     name: 'Priya S.',
     role: 'Investor & Wholesaler — Phoenix, AZ',
-    quote: "I've used Dealfuel on four deals now. The process is straightforward, no hidden fees, and they actually pick up the phone. I don't even shop around anymore — they're my go-to.",
+    quote: "I've used iFundYourDeals on four deals now. The process is straightforward, no hidden fees, and they actually pick up the phone. I don't even shop around anymore — they're my go-to.",
     rating: 5,
   },
   {
@@ -26,10 +26,10 @@ export default function Testimonials() {
         <div className="text-center mb-16 section-fade">
           <p className="text-blue-bright text-sm font-semibold uppercase tracking-widest mb-3">Social Proof</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-            Wholesalers Trust Dealfuel to Deliver
+            Wholesalers Trust iFundYourDeals to Deliver
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
-            Don't take our word for it — here's what investors say after using Dealfuel to close their deals.
+            Don't take our word for it — here's what investors say after using iFundYourDeals to close their deals.
           </p>
         </div>
 

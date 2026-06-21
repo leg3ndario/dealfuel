@@ -25,8 +25,9 @@ export default function Nav() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2">
           <span className="text-2xl font-black tracking-tight">
-            <span className="gradient-text">Deal</span>
-            <span className="text-white">fuel</span>
+            <span className="text-white">i</span>
+            <span className="gradient-text">Fund</span>
+            <span className="text-white">YourDeals</span>
           </span>
         </a>
 

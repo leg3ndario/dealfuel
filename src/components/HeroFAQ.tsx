@@ -3,11 +3,11 @@ import { useState } from 'react'
 const faqs = [
   {
     q: 'How much do you charge?',
-    a: 'Fees typically range from 1–3% of the funded amount for EMDs and Double Closes. Stack Method deals are quoted case by case. All fees are disclosed upfront — no surprises at closing.',
+    a: 'For EMD funding: 5% upfront (covers up to 30 days) plus an additional 20% fee when the deal closes. Double close funding starts at 1.5%. Seller carryback / Stack Method starts at 2.5% for the added complexity. Rates may vary based on deal duration and risk.',
   },
   {
     q: 'Are there any upfront fees?',
-    a: 'No. Zero upfront fees. Our fee is collected at closing from the transaction proceeds — you never pay out of pocket before your deal is done.',
+    a: 'For EMD deals: yes, the 5% upfront fee is required to secure funding. For double closes and seller carrybacks: no upfront fees — we don\'t fund until closing, so there\'s nothing out of pocket beforehand.',
   },
   {
     q: 'What qualifies as a Double Close?',
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'What qualifies as the Stack Method?',
-    a: 'Layered financing using seller carryback, DSCR loans, or other creative structures. We provide the transactional bridge capital to make these stacked deals executable.',
+    a: 'Layered financing using seller carryback notes, DSCR loans, or other creative structures stacked together to acquire a property. We provide the transactional bridge capital to make these deals executable.',
   },
   {
     q: 'Can you fund EMDs for end buyers?',
@@ -23,15 +23,15 @@ const faqs = [
   },
   {
     q: 'Is there a maximum amount you can fund?',
-    a: 'No hard cap. We have funded individual transactions exceeding $4 million. Large deals are reviewed case by case.',
+    a: 'No hard cap. We have funded individual transactions exceeding $4 million. Large deals are reviewed case by case — contact us directly for jumbo transactions.',
   },
   {
     q: 'How quickly can you fund my deal?',
-    a: 'Approval within 24–48 hours of a complete submission. Once approved and docs are in, funds are wired to title in time for your closing.',
+    a: 'Approval within 24–48 hours of a complete submission. Once approved and docs are in place, funds are wired to the title company in time for your scheduled closing.',
   },
   {
     q: "What happens if my deal doesn't close?",
-    a: "The funded amount is returned to us from escrow per our agreement. Your personal liability depends on the deal specifics — we work through each situation individually.",
+    a: "For EMD deals: the EMD is sent back to us and your only cost is the upfront fee — nothing else. For double closes and seller carrybacks: no charge at all since we don't fund until closing.",
   },
 ]
 
@@ -142,8 +142,8 @@ export default function HeroFAQ() {
             <div className="mt-5 pt-4 border-t border-white/5">
               <p className="text-white/30 text-xs">
                 Still have questions?{' '}
-                <a href="mailto:funding@dealfuel.com" className="text-blue-bright hover:text-white transition-colors">
-                  funding@dealfuel.com
+                <a href="mailto:funding@ifundyourdeals.com" className="text-blue-bright hover:text-white transition-colors">
+                  funding@ifundyourdeals.com
                 </a>
               </p>
             </div>
