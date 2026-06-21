@@ -38,13 +38,29 @@ export default function FundingForm() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<FormData>(INITIAL)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const set = (field: keyof FormData, value: string) =>
     setForm((f) => ({ ...f, [field]: value }))
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/submit-deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSubmitted(true)
+    } catch {
+      setSubmitError('Something went wrong. Please try again or email us directly.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -252,7 +268,7 @@ export default function FundingForm() {
                   ))}
                 </div>
                 <p className="text-white/30 text-xs mb-6">
-                  By submitting, you agree that Dealfuel may contact you regarding your funding request. No commitment is made until you review and accept the terms.
+                  By submitting, you agree that iFundYourDeals may contact you regarding your funding request. No commitment is made until you review and accept the terms.
                 </p>
                 <div className="flex gap-3">
                   <button type="button" onClick={() => setStep(3)} className="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-4 rounded-xl transition-colors">
@@ -260,11 +276,15 @@ export default function FundingForm() {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-DEFAULT hover:bg-blue-bright text-white font-bold py-4 rounded-xl transition-colors blue-glow"
+                    disabled={submitting}
+                    className="flex-1 bg-blue-DEFAULT hover:bg-blue-bright disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors blue-glow"
                   >
-                    Submit Request ✓
+                    {submitting ? 'Submitting…' : 'Submit Request ✓'}
                   </button>
                 </div>
+                {submitError && (
+                  <p className="mt-4 text-red-400 text-sm text-center">{submitError}</p>
+                )}
               </div>
             )}
           </form>
