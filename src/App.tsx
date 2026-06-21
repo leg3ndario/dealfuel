@@ -1,12 +1,9 @@
 import { useEffect, useRef } from 'react'
 import Nav from './components/Nav'
-import Hero from './components/Hero'
-import Problem from './components/Problem'
-import Benefits from './components/Benefits'
+import HeroFAQ from './components/HeroFAQ'
 import HowItWorks from './components/HowItWorks'
 import Products from './components/Products'
 import Testimonials from './components/Testimonials'
-import FAQ from './components/FAQ'
 import FundingForm from './components/FundingForm'
 import Footer from './components/Footer'
 
@@ -35,13 +32,10 @@ function App() {
   return (
     <div className="bg-bg min-h-screen">
       <Nav />
-      <Hero />
-      <Problem />
-      <Benefits />
+      <HeroFAQ />
       <HowItWorks />
       <Products />
       <Testimonials />
-      <FAQ />
       <FundingForm />
       <Footer />
     </div>
