@@ -56,7 +56,9 @@ function parseCurrency(val: string): number {
 function normalizePhone(val: string): string {
   const digits = val.replace(/\D/g, '')
   const ten = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits
-  return ten.length === 10 ? `+1${ten}` : val
+  return ten.length === 10
+    ? `(${ten.slice(0, 3)}) ${ten.slice(3, 6)}-${ten.slice(6)}`
+    : val
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {

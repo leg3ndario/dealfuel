@@ -141,14 +141,14 @@ export default function FundingForm() {
   return (
     <section id="funding-form" className="py-24 bg-surface">
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10 section-fade">
+        <div className="text-center mb-10">
           <p className="text-blue-bright text-sm font-semibold uppercase tracking-widest mb-3">Get Funded</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Submit a Funding Request</h2>
           <p className="text-white/50">Takes less than 5 minutes. No commitment until you approve the terms.</p>
         </div>
 
         {/* Step indicator */}
-        <div className="flex items-center gap-2 mb-10 section-fade">
+        <div className="flex items-center gap-2 mb-10">
           {['Deal Type', 'Your Info', 'Deal Details', 'Review'].map((label, i) => {
             const s = i + 1
             return (
@@ -169,7 +169,7 @@ export default function FundingForm() {
           })}
         </div>
 
-        <div className="bg-surface-2 border border-white/5 rounded-2xl p-6 sm:p-8 section-fade">
+        <div className="bg-surface-2 border border-white/5 rounded-2xl p-6 sm:p-8">
           <form onSubmit={handleSubmit}>
 
             {/* Step 1: Deal Type */}
