@@ -1,6 +1,7 @@
 interface Env {
   GHL_API_KEY: string
   GHL_LOCATION_ID: string
+  TURNSTILE_SECRET_KEY: string
 }
 
 interface FormPayload {
@@ -18,6 +19,7 @@ interface FormPayload {
   closingDate: string
   propertyType?: string
   notes?: string
+  turnstileToken: string
 }
 
 // GHL custom field IDs
@@ -68,8 +70,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       firstName, lastName, email, phone, dealType,
       street, city, state, zip,
       purchasePrice, fundingAmount, closingDate,
-      propertyType, notes,
+      propertyType, notes, turnstileToken,
     } = data
+
+    // Verify Turnstile token
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: env.TURNSTILE_SECRET_KEY,
+        response: turnstileToken,
+        remoteip: request.headers.get('CF-Connecting-IP') ?? '',
+      }),
+    })
+    const verify = await verifyRes.json() as { success: boolean }
+    if (!verify.success) {
+      return Response.json({ error: 'Bot verification failed' }, { status: 400 })
+    }
 
     const dealTypeLabel = DEAL_TYPE_LABELS[dealType] ?? 'Other'
     const dealTag = DEAL_TAGS[dealType] ?? 'Other'

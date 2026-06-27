@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+const TURNSTILE_SITE_KEY = '0x4AAAAAADsBf6Mfgdt-mXL1'
 
 type DealType = 'emd' | 'double-same' | 'double-diff' | 'stack' | 'other' | ''
 
@@ -67,6 +69,23 @@ export default function FundingForm() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRef = useRef<HTMLDivElement>(null)
+  const widgetId = useRef<string>('')
+
+  useEffect(() => {
+    if (step !== 4) return
+    const w = window as unknown as { turnstile?: { render: (el: HTMLElement, opts: object) => string; remove: (id: string) => void } }
+    if (!turnstileRef.current || !w.turnstile) return
+    widgetId.current = w.turnstile.render(turnstileRef.current, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: 'dark',
+      callback: (token: string) => setTurnstileToken(token),
+      'expired-callback': () => setTurnstileToken(''),
+      'error-callback': () => setTurnstileToken(''),
+    })
+    return () => { if (widgetId.current) w.turnstile?.remove(widgetId.current) }
+  }, [step])
 
   const set = (field: keyof FormData, value: string) => {
     setForm(f => ({ ...f, [field]: value }))
@@ -105,7 +124,7 @@ export default function FundingForm() {
       const res = await fetch('/api/submit-deal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken }),
       })
       if (!res.ok) throw new Error('Failed')
       setSubmitted(true)
@@ -473,13 +492,14 @@ export default function FundingForm() {
                 <p className="text-white/30 text-xs mb-6">
                   By submitting, you agree that iFundYourDeals may contact you regarding your funding request. No commitment is made until you review and accept the terms.
                 </p>
+                <div ref={turnstileRef} className="mb-4" />
                 <div className="flex gap-3">
                   <button type="button" onClick={() => setStep(3)} className="flex-1 bg-white/5 hover:bg-white/10 text-white font-semibold py-4 rounded-xl transition-colors">
                     ← Edit
                   </button>
                   <button
                     type="submit"
-                    disabled={submitting}
+                    disabled={submitting || !turnstileToken}
                     className="flex-1 bg-blue-DEFAULT hover:bg-blue-bright disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors blue-glow"
                   >
                     {submitting ? 'Submitting…' : 'Submit Request ✓'}
