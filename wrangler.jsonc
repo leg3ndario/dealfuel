@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "dealfuel",
-  "account_id": "0b9876185a3784c478d7a9bbe31e9652",
   "compatibility_date": "2026-04-29",
   "pages_build_output_dir": "./dist"
 }
