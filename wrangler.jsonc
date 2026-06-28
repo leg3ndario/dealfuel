@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "dealfuel",
+  "name": "ifundyourdeals",
   "compatibility_date": "2026-04-29",
   "pages_build_output_dir": "./dist"
 }

@@ -70,6 +70,7 @@ export default function FundingForm() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [turnstileToken, setTurnstileToken] = useState('')
+  const [pendingSubmit, setPendingSubmit] = useState(false)
   const turnstileRef = useRef<HTMLDivElement>(null)
   const widgetId = useRef<string>('')
 
@@ -116,15 +117,22 @@ export default function FundingForm() {
     form.closingDate && form.closingDate >= TODAY &&
     (form.dealType !== 'other' || form.notes.trim())
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (pendingSubmit && turnstileToken) {
+      setPendingSubmit(false)
+      doSubmit(turnstileToken)
+    }
+  }, [pendingSubmit, turnstileToken])
+
+  async function doSubmit(token: string) {
     setSubmitting(true)
     setSubmitError('')
     try {
       const res = await fetch('/api/submit-deal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, turnstileToken }),
+        body: JSON.stringify({ ...form, turnstileToken: token }),
       })
       if (!res.ok) throw new Error('Failed')
       setSubmitted(true)
@@ -133,6 +141,12 @@ export default function FundingForm() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!turnstileToken) { setPendingSubmit(true); return }
+    doSubmit(turnstileToken)
   }
 
   if (submitted) {
@@ -499,10 +513,10 @@ export default function FundingForm() {
                   </button>
                   <button
                     type="submit"
-                    disabled={submitting || !turnstileToken}
+                    disabled={submitting}
                     className="flex-1 bg-blue-DEFAULT hover:bg-blue-bright disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-colors blue-glow"
                   >
-                    {submitting ? 'Submitting…' : 'Submit Request ✓'}
+                    {submitting ? 'Submitting…' : pendingSubmit ? 'Verifying…' : 'Submit Request ✓'}
                   </button>
                 </div>
                 {submitError && (
